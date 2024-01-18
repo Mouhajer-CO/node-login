@@ -1,23 +1,24 @@
-import { Request } from 'express';
-import cookie from 'cookie';
 import cookieParser from 'cookie-parser';
+import cookie from 'cookie';
 
-import { COOKIE_SECRET, USER_TOKEN_NAME } from '../config';
+export const getCookieValue = (cookies: any, cookieName: string) => {
+    return cookies.get(cookieName);
+};
 
-export const getJwt = (req: Request) => {
+export const getParsedCookieValue = (cookieValue: any, cookieName: string) => {
+    return cookie.parse(`${cookieName}=${cookieValue}`)[cookieName];
+};
 
-  const cookieValue = req.cookies.get(USER_TOKEN_NAME);
-  const parsedCookie = cookie.parse(`connect.sid=${cookieValue}`)['connect.sid'];
+export const getUnsignedCookie = (parsedCookie: string, cookieSecret: string) => {
+    return cookieParser.signedCookie(parsedCookie, cookieSecret);
+};
 
-  // If the cookie is not a signed cookie, the parser will return the provided value
-  const jwt = cookieParser.signedCookie(parsedCookie, COOKIE_SECRET);
+export const validateUnsignedCookie = (unsignedCookie: string | false): boolean => {
+    return !(!unsignedCookie || unsignedCookie === 'undefined');
+};
 
-  // TODO: Check returned value! 
-  if (!jwt || jwt === 'undefined') {
-    throw new Error(
-      `Failed to verify signature for ${USER_TOKEN_NAME}, cookie value: ${cookieValue}`
-    );
-  }
-
-  return jwt;
+export const getJwtFromCookie = (cookies: any, cookieName: string, cookieSecret: string): string | false => {
+    const cookieValue = getCookieValue(cookies, cookieName);
+    const parsedCookie = getParsedCookieValue(cookieValue, cookieName);
+    return getUnsignedCookie(parsedCookie, cookieSecret);
 };
