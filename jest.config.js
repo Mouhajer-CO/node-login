@@ -1,7 +1,13 @@
 module.exports = {
   roots: ["<rootDir>/src", "<rootDir>/test"],
   testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  collectCoverage: true,
   collectCoverageFrom: ["./src/**/*.ts"],
+  coverageThreshold: {
+    global: {
+      lines: 95,
+    },
+  },
   preset: "ts-jest",
   testEnvironment: "node",
   verbose: true,
