@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@co-digital/logging": "^1.0.1",
+    "aws-jwt-verify": "^4.0.1",
     "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0"
