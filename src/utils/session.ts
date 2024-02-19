@@ -1,8 +1,13 @@
-const getSessionData = (session: any, key: string): any => {
-    return session?.data?.[key];
+import { SESSION_APP_KEY } from "../config";
+
+export const getSessionData = (session: any): any => {
+    return session?.[SESSION_APP_KEY] || {};
 };
 
-export const getLoggedInUserEmail = (session: any, key: string): string => {
-    const signInInfo = getSessionData(session, key);
-    return signInInfo.email;
+export const setSessionData = (session: any, appData: any): void => {
+    return session[SESSION_APP_KEY] = { ...appData }
+};
+
+export const removeSessionData = (session: any) => {
+    session[SESSION_APP_KEY] = null;
 };
