@@ -1,13 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLoggedInUserEmail = void 0;
-const getSessionData = (session, key) => {
-    var _a;
-    return (_a = session === null || session === void 0 ? void 0 : session.data) === null || _a === void 0 ? void 0 : _a[key];
+exports.removeSessionData = exports.setSessionData = exports.getSessionData = void 0;
+const config_1 = require("../config");
+const getSessionData = (session) => {
+    return (session === null || session === void 0 ? void 0 : session[config_1.SESSION_APP_KEY]) || {};
 };
-const getLoggedInUserEmail = (session, key) => {
-    const signInInfo = getSessionData(session, key);
-    return signInInfo.email;
+exports.getSessionData = getSessionData;
+const setSessionData = (session, appData) => {
+    return session[config_1.SESSION_APP_KEY] = Object.assign({}, appData);
 };
-exports.getLoggedInUserEmail = getLoggedInUserEmail;
+exports.setSessionData = setSessionData;
+const removeSessionData = (session) => {
+    session[config_1.SESSION_APP_KEY] = null;
+};
+exports.removeSessionData = removeSessionData;
 //# sourceMappingURL=session.js.map

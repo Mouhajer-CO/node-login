@@ -1,5 +1,5 @@
-import { getJwtFromCookie } from './utils/cookie';
-import { getLoggedInUserEmail } from './utils/session';
-import { authenticationMiddleware } from './middlewares/authentication.middleware';
+import { getSessionData, setSessionData, removeSessionData } from './utils/session';
+import { colaAuthenticationMiddleware } from './middlewares/cola/authentication.middleware';
 import { verifyCognitoJwtVerifier } from './utils/cognitoJwtVerifier';
-export { authenticationMiddleware, verifyCognitoJwtVerifier, getLoggedInUserEmail, getJwtFromCookie };
+import { getUnsignedCookie } from './utils/cookie';
+export { colaAuthenticationMiddleware, verifyCognitoJwtVerifier, removeSessionData, getUnsignedCookie, getSessionData, setSessionData };
